@@ -83,5 +83,7 @@ class App extends Component {
 }
 ```
 
+See [sample](https://github.com/alexghenderson/formik-field/blob/master/sample/src/App.js) for format and normalize
+
 ## Tips
 Make a snippet for this. 
