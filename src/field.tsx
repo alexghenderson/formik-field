@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import getDeep from 'get-deep';
 
 export interface RenderProps {
     name: string,
@@ -79,13 +80,13 @@ export default class Field extends React.Component<FieldProps, {}> {
 
         const {name} = this.props;
 
-        if(this.context.formik.values[name] !== nextContext.formik.values[name]) {
+        if(getDeep(this.context.formik.values, name) !== getDeep(nextContext.formik.values, name)) {
             return true;
         }
-        if(this.context.formik.errors[name] !== nextContext.formik.errors[name]) {
+        if(getDeep(this.context.formik.errors, name) !== getDeep(nextContext.formik.errors, name)) {
             return true;
         }
-        if(this.context.formik.touched[name] !== nextContext.formik.touched[name]) {
+        if(getDeep(this.context.formik.touched, name) !== getDeep(nextContext.formik.touched, name)) {
             return true;
         }
         return false;
@@ -96,13 +97,14 @@ export default class Field extends React.Component<FieldProps, {}> {
         const {values, touched, errors} = this.context.formik;
         const r = render || children as (props: RenderProps)=>React.ReactNode;
         
+        const value = getDeep(values, name);
         return r({
             name,
             handleChange: this.handleChange,
             handleBlur: this.handleBlur,
-            value: format ? format(values[name]) : values[name],
-            touched: touched[name],
-            error: errors[name],
+            value: format ? format(value) : value,
+            touched: getDeep(touched, name),
+            error: getDeep(errors, name),
             label: label || name,
         });
     }
