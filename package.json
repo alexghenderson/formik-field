@@ -6,7 +6,7 @@
   "typings": "dist/field.d.ts",
   "scripts": {
     "build": "rm dist/* && tsc",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
