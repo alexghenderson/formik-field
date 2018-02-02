@@ -15,9 +15,6 @@
   "author": "Alex Henderson",
   "license": "MIT",
   "devDependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "tslib": "^1.9.0",
     "typescript": "^2.7.1",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.36",
@@ -26,5 +23,9 @@
   "peerDependencies": {
     "react": ">=15"
   },
-  "dependencies": {}
+  "dependencies": {
+    "tslib": "^1.9.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0"
+  }
 }
