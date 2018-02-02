@@ -1,0 +1,27 @@
+{
+  "name": "formik-field",
+  "version": "1.0.0",
+  "description": "Field helper for formik forms",
+  "main": "dist/field.js",
+  "typings": "dist/field.d.ts",
+  "scripts": {
+    "build": "rm dist/* && tsc",
+    "prepublish": "npm run build"
+  },
+  "author": "Alex Henderson",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/prop-types": "^15.5.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "tslib": "^1.9.0",
+    "typescript": "^2.7.1"
+  },
+  "peerDependencies": {
+    "react": ">=15"
+  },
+  "dependencies": {
+    "@types/react": "^16.0.36",
+    "@types/react-dom": "^16.0.3"
+  }
+}
