@@ -5,7 +5,7 @@
   "main": "dist/field.js",
   "typings": "dist/field.d.ts",
   "scripts": {
-    "build": "rm dist/* && tsc",
+    "build": "rm -f dist/* && tsc",
     "prepare": "npm run build"
   },
   "repository": {
