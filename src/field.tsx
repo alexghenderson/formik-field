@@ -61,7 +61,7 @@ export default class Field extends React.Component<FieldProps, {}> {
         const {name, normalize} = this.props;
         const {setFieldValue} = this.context.formik;
 
-        let value = e.target ? e.target.value : e;
+        let value = e && e.target ? e.target.value : e;
         
         setFieldValue(name, normalize ? normalize(value) : value);
     }
