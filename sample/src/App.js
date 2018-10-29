@@ -1,152 +1,89 @@
-import React, { Component } from 'react';
-import {Formik} from 'formik';
-import Field from 'formik-field';
-import yup from 'yup';
+import React, {Component} from 'react';
+import {Formik, Form} from 'formik';
+import Field from '../../';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
+        <h1>Sign Up</h1>
         <Formik
           initialValues={{
-            title: '',
-            user: {
-              name: '',
-              email: '',
-            },
-            people: [{
-              name: '',
-              email: '',
-            }]
+            firstName: '',
+            lastName: '',
+            email: '',
           }}
-          validationSchema={yup.object().shape({
-            title: yup.string().required().label('Title'),
-            user: yup.object().shape({
-              name: yup.string().required().min(1).label('Name'),
-              email: yup.string().email().required().label('Email'),
-            }),
-            people: yup.array().of(yup.object().shape({
-              name: yup.string().required().min(1).label('Name'),
-              email: yup.string().email().required().label('Email'),
-            }))
-          })}
-          onSubmit={(values)=>{window.alert(`Hello ${values.user.name} (${values.user.email})`)}}
-          render={({handleSubmit})=>(
-            <form onSubmit={handleSubmit}>
+          onSubmit={(values) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+            }, 500);
+          }}
+          render={() => (
+            <Form>
               <Field
-                name='title'
-                label='Title'
-                render={({handleChange, handleBlur, value, error, label})=>(
-                  <div>
-                    <div>{label}</div>
-                    <div>
-                      <input
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={value}
-                      />
-                    </div>
-                    {
-                      error &&
-                      <div>
-                        {error}
-                      </div>
-                    }
-                  </div>
+                name="firstName"
+                label="First Name"
+                render={({
+                  handleChange,
+                  handleBlur,
+                  value,
+                  error,
+                  label,
+                  name,
+                }) => (
+                  <React.Fragment>
+                    <label htmlFor={name}>{label}</label>
+                    <input
+                      type="text"
+                      name={name}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      value={value}
+                    />
+                    <div hidden={!error}>{error}</div>
+                  </React.Fragment>
                 )}
               />
+
               <Field
-                name='user.name'
-                label='User Name'
-                render={({handleChange, handleBlur, value, error, label})=>(
-                  <div>
-                    <div>{label}</div>
-                    <div>
-                      <input
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={value}
-                      />
-                    </div>
-                    {
-                      error &&
-                      <div>
-                        {error}
-                      </div>
-                    }
-                  </div>
+                name="lastName"
+                label="Last Name"
+                render={({
+                  handleChange,
+                  handleBlur,
+                  value,
+                  error,
+                  label,
+                  name,
+                }) => (
+                  <React.Fragment>
+                    <label htmlFor={name}>{label}</label>
+                    <input
+                      type="text"
+                      name={name}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      value={value}
+                    />
+                    <div hidden={!error}>{error}</div>
+                  </React.Fragment>
                 )}
               />
+
               <Field
-                name='user.email'
-                label='User Email (normalized to lower case, formatted to upper case)'
-                normalize={(val='')=>(val.toLowerCase())}
-                format={(val='')=>(val.toUpperCase())}
-                render={({handleChange, handleBlur, value, error, label})=>(
-                  <div>
-                    <div>{label}</div>
-                    <div>
-                      <input
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={value}
-                      />
-                    </div>
-                    {
-                      error &&
-                      <div>
-                        {error}
-                      </div>
-                    }
-                  </div>
+                name="email"
+                label="Email"
+                placeholder="jane@acme.com"
+                type="email"
+                render={({error, label, name, ...field}) => (
+                  <React.Fragment>
+                    <label htmlFor={name}>{label}</label>
+                    <input name={name} {...field} />
+                    <div hidden={!error}>{error}</div>
+                  </React.Fragment>
                 )}
               />
-              <Field
-                name='people.0.name'
-                label='People[0] Name'
-                render={({handleChange, handleBlur, value, error, label})=>(
-                  <div>
-                    <div>{label}</div>
-                    <div>
-                      <input
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={value}
-                      />
-                    </div>
-                    {
-                      error &&
-                      <div>
-                        {error}
-                      </div>
-                    }
-                  </div>
-                )}
-              />
-              <Field
-                name='people.0.email'
-                label='People[0] Email'
-                render={({handleChange, handleBlur, value, error, label})=>(
-                  <div>
-                    <div>{label}</div>
-                    <div>
-                      <input
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={value}
-                      />
-                    </div>
-                    {
-                      error &&
-                      <div>
-                        {error}
-                      </div>
-                    }
-                  </div>
-                )}
-              />
-              <button type='submit'>Go</button>
-            </form>
+            </Form>
           )}
         />
       </div>

@@ -1,11 +1,11 @@
 {
   "name": "formik-field",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Field helper for formik forms",
   "main": "dist/field.js",
   "typings": "dist/field.d.ts",
   "scripts": {
-    "build": "rm -f dist/* && tsc",
+    "build": "rm -f dist/* && babel ./src --out-dir dist --extensions '.tsx' src",
     "prepare": "npm run build"
   },
   "repository": {
@@ -15,17 +15,27 @@
   "author": "Alex Henderson",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^2.7.1",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.0.36",
-    "@types/react-dom": "^16.0.3"
+    "@types/react": "^16.4.18",
+    "@types/react-dom": "^16.0.9",
+    "typescript": "^2.7.1"
   },
   "peerDependencies": {
-    "react": ">=15"
+    "formik": ">=1.0.0",
+    "react": ">=16.3"
   },
   "dependencies": {
+    "formik": "^1.3.1",
     "get-deep": "^1.0.1",
-    "prop-types": "^15.6.0",
+    "invariant": "^2.2.4",
+    "prop-types": "^15.6.2",
     "tslib": "^1.9.0"
   }
 }
