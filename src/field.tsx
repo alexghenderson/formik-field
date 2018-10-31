@@ -2,8 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import getDeep from 'get-deep';
 import invariant from 'invariant';
-import {connect, getIn, Field as FormikField} from 'formik';
-import {normalize} from 'path';
+import {connect, Field as FormikField} from 'formik';
 
 export interface RenderProps {
   name: string;
@@ -15,11 +14,18 @@ export interface RenderProps {
   label: any;
 }
 
+export interface RenderFieldProps {
+  name: string,
+  onChange: (w?: any) => void;
+  onBlur: () => void;
+  value: any;
+}
+
 export interface FieldProps {
   name: string;
   label?: string;
-  render?: (props: RenderProps) => React.ReactNode;
-  children?: (props: RenderProps) => React.ReactNode;
+  render?: (props: RenderProps, fieldProps: RenderFieldProps) => React.ReactNode;
+  children?: (props: RenderProps, fieldProps: RenderFieldProps) => React.ReactNode;
   format?: (value: any) => any;
   normalize?: (value: any) => any;
 }
@@ -34,7 +40,15 @@ class Field extends React.Component<FieldProps, {}> {
     normalize: PropTypes.func,
   };
   render() {
-    const {children, render, name, label, format, ...field} = this.props;
+    const {
+      children,
+      render,
+      name,
+      label,
+      format,
+      normalize,
+      ...field
+    } = this.props;
     const r = render || children;
     invariant(
       typeof r === 'function',
@@ -44,22 +58,33 @@ class Field extends React.Component<FieldProps, {}> {
       <FormikField>
         {(props) => {
           const {form} = props;
+          const handleChange = (e) => {
+            const value = e && e.target ? e.target.value : e;
+            form.setFieldValue(name, normalize ? normalize(value) : value);
+          };
+          const handleBlur = () => {
+            form.setFieldTouched(name, true);
+          };
+          const value = format
+            ? format(getDeep(form.values, name))
+            : getDeep(form.values, name);
+          const touched = getDeep(form.touched, name);
+          const error = getDeep(form.errors, name);
+
           return r({
             name,
-            handleChange: (e) => {
-              const value = e && e.target ? e.target.value : e;
-              form.setFieldValue(name, normalize ? normalize(value) : value);
-            },
-            handleBlur: () => {
-              form.setFieldTouched(name, true);
-            },
-            value: format
-              ? format(getDeep(form.values, name))
-              : getDeep(form.values, name),
-            touched: getDeep(form.touched, name),
-            error: getDeep(form.errors, name),
+            handleChange,
+            handleBlur,
+            value,
+            touched,
+            error,
             label,
             ...field,
+          }, {
+            name,
+            value,
+            onChange: handleChange,
+            onBlur: handleBlur,
           });
         }}
       </FormikField>

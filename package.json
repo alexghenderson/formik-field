@@ -1,6 +1,6 @@
 {
   "name": "formik-field",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Field helper for formik forms",
   "main": "dist/field.js",
   "typings": "dist/field.d.ts",
